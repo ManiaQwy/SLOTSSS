@@ -1,6 +1,6 @@
 const SYMBOLS = ["💲","💎","🃏","🍀","💰","🍒","🍉","🍓","🍊","🍋","🍐"]
 let slotMachine = [0,0,0];
-let AllTimeStache = 10;
+let AllTimeStache = 20;
 let StachCounter = document.getElementById("StacheCounter");
 let SlotOne = document.getElementById("slot1");
 let SlotTwo = document.getElementById("slot2");
@@ -23,6 +23,7 @@ function ItsGamblingTime(){
     slotMachine[2] = symbThree;
     SwitchPictures();
     PointCounter();
+    StachCounter.innerHTML = AllTimeStache;
 }
 
 function SwitchPictures(){
