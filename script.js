@@ -13,6 +13,9 @@ let symbThree = 0;
 //sounds
 
 let rollSound = new Audio("SoundEffects/mixkit-arcade-slot-machine-wheel-1933.wav");
+let MegaWin = new Audio("SoundEffects/mixkit-payout-award-1934.wav");
+let MidWin = new Audio("SoundEffects/mixkit-magical-coin-win-1936.wav");
+let AwDangit = new Audio("SoundEffects/aw-dangit.mp3");
 
 const disableButton = () =>{
     buttonRolling.disabled = true;
@@ -23,6 +26,12 @@ const enableButton = () =>{
 
 function ItsGamblingTime(){
     disableButton();
+    MegaWin.pause();
+    MidWin.pause();
+    AwDangit.pause();
+    MegaWin.load();
+    MidWin.load();
+    AwDangit.load();
     if(AllTimeStache <= 0){
         location.reload()
     } else{
@@ -69,6 +78,7 @@ function SwitchPictures(){
 
 function PointCounter(){
     if(slotMachine[0] == slotMachine[1] && slotMachine[1] == slotMachine[2]){
+        MegaWin.play()
         if(slotMachine[0] == 0){
             AllTimeStache = AllTimeStache + 100;
         } else if(slotMachine[0] == 1 || slotMachine[0] == 2 || slotMachine[0] == 3 || slotMachine[0] == 4){
@@ -77,6 +87,7 @@ function PointCounter(){
             AllTimeStache = AllTimeStache + 50;
         }
     } else if(slotMachine[0] == slotMachine[1] || slotMachine[1] == slotMachine[2]){
+        MidWin.play()
         if(slotMachine[1] == 0){
             AllTimeStache = AllTimeStache + 15;
         } else if(slotMachine[1] == 1 || slotMachine[1] == 2 || slotMachine[1] == 3 || slotMachine[1] == 4){
@@ -84,6 +95,8 @@ function PointCounter(){
         } else if(slotMachine[1] == 5 || slotMachine[1] == 6 || slotMachine[1] == 7 || slotMachine[1] == 8 || slotMachine[1] == 9 || slotMachine[1] == 10){
             AllTimeStache = AllTimeStache + 5;
         }
+    } else {
+        AwDangit.play()
     }
 
 }
