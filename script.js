@@ -1,6 +1,7 @@
 const SYMBOLS = ["💲","💎","🃏","🍀","💰","🍒","🍉","🍓","🍊","🍋","🍐"]
-let slotMachine = [0,0,0];
+let slotMachine = [0,1,2];
 let AllTimeStache = 20;
+const buttonRolling = document.getElementById("buttonRoll");
 let StachCounter = document.getElementById("StacheCounter");
 let SlotOne = document.getElementById("slot1");
 let SlotTwo = document.getElementById("slot2");
@@ -8,13 +9,30 @@ let SlotThree = document.getElementById("slot3");
 let symbOne = 0;
 let symbTwo = 0;
 let symbThree = 0;
+
+//sounds
+
+let rollSound = new Audio("SoundEffects/mixkit-arcade-slot-machine-wheel-1933.wav");
+
+const disableButton = () =>{
+    buttonRolling.disabled = true;
+}
+const enableButton = () =>{
+    buttonRolling.disabled = false;
+}
+
 function ItsGamblingTime(){
+    disableButton();
     if(AllTimeStache <= 0){
         location.reload()
     } else{
         AllTimeStache--;
     }
     StachCounter.innerHTML = AllTimeStache;
+    RollingAnim();
+}
+
+function VisualChange(){
     symbOne = Math.floor((Math.random() * 10));
     symbTwo = Math.floor((Math.random() * 10));
     symbThree = Math.floor((Math.random() * 10));
@@ -22,8 +40,23 @@ function ItsGamblingTime(){
     slotMachine[1] = symbTwo;
     slotMachine[2] = symbThree;
     SwitchPictures();
-    PointCounter();
-    StachCounter.innerHTML = AllTimeStache;
+}
+
+function RollingAnim() {
+    let spinCount = 0;
+    rollSound.play();
+    interval = setInterval(() => {
+        VisualChange();
+        spinCount++;
+        if (spinCount >= 7) {
+            rollSound.pause();
+            rollSound.load();
+            clearInterval(interval);
+            PointCounter();
+            StachCounter.innerHTML = AllTimeStache;
+            enableButton();
+        }
+    }, 200);
 }
 
 function SwitchPictures(){
@@ -52,4 +85,5 @@ function PointCounter(){
             AllTimeStache = AllTimeStache + 5;
         }
     }
+
 }
